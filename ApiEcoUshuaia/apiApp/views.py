@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import filters
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from apiApp.models import Residuos
+from apiApp.serializers import ResiduosSerializer
+
+
+class ResiduosViewSet(ModelViewSet):
+    queryset = Residuos.objects.all()
+    serializer_class = ResiduosSerializer
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['id_residuo', 'categoria', 'nombre']
+    ordering_fields = ['id_residuo', 'nombre', 'peso', 'categoria']
