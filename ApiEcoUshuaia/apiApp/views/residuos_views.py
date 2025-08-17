@@ -2,7 +2,7 @@ from rest_framework import filters
 from rest_framework.viewsets import ModelViewSet
 
 from apiApp.models import Residuos
-from apiApp.serializers import ResiduosSerializer
+from apiApp.serializers.residuos_serializer import ResiduosSerializer
 
 
 class ResiduosViewSet(ModelViewSet):
