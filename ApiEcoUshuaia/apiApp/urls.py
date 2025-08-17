@@ -1,7 +1,10 @@
-from django.urls import path
-from apiApp import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
+from apiApp.views import ResiduosViewSet
+
+router = DefaultRouter()
+router.register('residuos', ResiduosViewSet, basename='residuos')
 urlpatterns = [
-    path('residuos/', views.residuos_list),
-    path('residuos/<int:pk>/', views.residuo_detail),
+    path('', include(router.urls)),
 ]
