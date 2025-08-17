@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Residuos
+from apiApp.models import Residuos
 
 
 class ResiduosSerializer(serializers.ModelSerializer):
