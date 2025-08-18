@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueTogetherValidator
 from apiApp.models import Usuarios
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
         fields = '__all__'
@@ -16,4 +16,3 @@ class UserSerializer(serializers.ModelSerializer):
                 message= 'Este usuario ya existe en la base de datos'
             )
         ]
-            
