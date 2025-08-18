@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from apiApp.views.calendarios_views import CalendariosViewSet
 from apiApp.views.contenedores_views import ContenedoresViewSet
 from apiApp.views.coordenada_views import CoordendaViewSet
+from apiApp.views.direcciones_views import DireccionesViewSet
 from apiApp.views.notificaciones_views import NotificacionesViewSet
 from apiApp.views.residuos_views import ResiduosViewSet
 from apiApp.views.ususarios_views import UsuariosViewSet
@@ -17,6 +18,7 @@ router.register('notificaciones', NotificacionesViewSet, basename='notificacione
 router.register('usuarios', UsuariosViewSet, basename='usuarios')
 router.register('contenedores', ContenedoresViewSet, basename='contenedores')
 router.register('zonas', ZonasViewSet, basename='zonas')
+router.register('direcciones', DireccionesViewSet, basename='direcciones')
 urlpatterns = [
     path('', include(router.urls)),
 ]
