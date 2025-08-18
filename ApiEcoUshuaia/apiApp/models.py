@@ -194,7 +194,7 @@ class Usuarios(models.Model):
     id_direccion = models.ForeignKey(Direcciones, models.DO_NOTHING, db_column='id_direccion', blank=True, null=True)
     id_zona = models.ForeignKey('Zonas', models.DO_NOTHING, db_column='id_zona', blank=True, null=True)
     id_tipo_usuario = models.ForeignKey(TipoUsuarios, models.DO_NOTHING, db_column='id_tipo_usuario', blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, db_column='id_user', blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = True
