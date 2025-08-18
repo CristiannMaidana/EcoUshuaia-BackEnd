@@ -7,6 +7,7 @@ from apiApp.views.coordenada_views import CoordendaViewSet
 from apiApp.views.notificaciones_views import NotificacionesViewSet
 from apiApp.views.residuos_views import ResiduosViewSet
 from apiApp.views.ususarios_views import UsuariosViewSet
+from apiApp.views.zonas_views import ZonasViewSet
 
 router = DefaultRouter()
 router.register('residuos', ResiduosViewSet, basename='residuos')
@@ -15,6 +16,7 @@ router.register('coordenadas', CoordendaViewSet, basename='coordenadas')
 router.register('notificaciones', NotificacionesViewSet, basename='notificaciones')
 router.register('usuarios', UsuariosViewSet, basename='usuarios')
 router.register('contenedores', ContenedoresViewSet, basename='contenedores')
+router.register('zonas', ZonasViewSet, basename='zonas')
 urlpatterns = [
     path('', include(router.urls)),
 ]
