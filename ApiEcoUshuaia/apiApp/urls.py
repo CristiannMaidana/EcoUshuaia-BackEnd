@@ -21,6 +21,7 @@ router.register('contenedores', ContenedoresViewSet, basename='contenedores')
 router.register('zonas', ZonasViewSet, basename='zonas')
 router.register('direcciones', DireccionesViewSet, basename='direcciones')
 router.register('ususariosHistorialesResiduos', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
+router.register('usuarioRegistroContenedores', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
 urlpatterns = [
     path('', include(router.urls)),
 ]
