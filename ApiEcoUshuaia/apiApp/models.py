@@ -19,6 +19,9 @@ class Calendarios(models.Model):
         managed = False
         db_table = 'calendarios'
 
+    def __str__(self):
+        return f"{self.fecha} {self.hora} {self.novedad}"
+
 
 class Contenedores(models.Model):
     id_contenedor = models.AutoField(primary_key=True)
