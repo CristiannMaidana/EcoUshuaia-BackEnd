@@ -191,6 +191,9 @@ class TipoUsuarios(models.Model):
         managed = False
         db_table = 'tipo_usuarios'
 
+    def __str__(self):
+        return self.tipo_usuario
+
 
 class Usuarios(models.Model):
     id_usuario = models.AutoField(primary_key=True)
