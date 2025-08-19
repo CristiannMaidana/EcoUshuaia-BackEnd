@@ -20,8 +20,8 @@ router.register('usuarios', UsuariosViewSet, basename='usuarios')
 router.register('contenedores', ContenedoresViewSet, basename='contenedores')
 router.register('zonas', ZonasViewSet, basename='zonas')
 router.register('direcciones', DireccionesViewSet, basename='direcciones')
-router.register('ususariosHistorialesResiduos', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
-router.register('usuarioRegistroContenedores', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
+router.register('Historial de residuos de usuarios', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
+router.register('Registro de contenedores de ususarios', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
 urlpatterns = [
     path('', include(router.urls)),
 ]
