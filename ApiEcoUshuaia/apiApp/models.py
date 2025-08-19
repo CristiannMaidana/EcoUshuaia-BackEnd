@@ -142,6 +142,9 @@ class Residuos(models.Model):
         managed = False
         db_table = 'residuos'
 
+    def __str__(self):
+        return self.nombre
+
 
 class Sensores(models.Model):
     id_sensor = models.AutoField(primary_key=True)
