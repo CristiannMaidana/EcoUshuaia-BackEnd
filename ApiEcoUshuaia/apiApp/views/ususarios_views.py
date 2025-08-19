@@ -9,5 +9,5 @@ class UsuariosViewSet(viewsets.ModelViewSet):
     serializer_class = UsuariosSerializer
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('email', 'id_zona__nombre_zona', 'id_tipo_ususario__tipo_usuario')
+    search_fields = ('id_usuario', 'email', )#'id_zona__nombre_zona', 'id_tipo_ususario__tipo_usuario')#
     ordering_fields = ('id_usuario', 'nombre_usuario', 'apellido_usuario', 'id_zona__nombre_zona')
