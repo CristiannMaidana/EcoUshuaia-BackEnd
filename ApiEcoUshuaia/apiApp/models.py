@@ -53,6 +53,9 @@ class Coordenadas(models.Model):
         managed = False
         db_table = 'coordenadas'
 
+    def __str__(self):
+        return f"{self.tipo_archivo} - {self.tipo_coordenada}"
+
 
 class Direcciones(models.Model):
     id_direccion = models.AutoField(primary_key=True)
