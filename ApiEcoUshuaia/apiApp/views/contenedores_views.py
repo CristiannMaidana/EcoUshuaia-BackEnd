@@ -10,5 +10,5 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
     serializer_class = ContenedoresSerializer
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('nombre_contenedor', 'id_residuo__categoria')
+    search_fields = ('nombre_contenedor', 'id_residuo__nombre')
     ordering_fields = ('nombre_contenedor', 'id_residuo__categoria','id_zona__nombre_zona')
