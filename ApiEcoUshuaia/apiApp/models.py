@@ -27,13 +27,13 @@ class Contenedores(models.Model):
     id_contenedor = models.AutoField(primary_key=True)
     nombre_contenedor = models.CharField(max_length=50)
     color_contenedor = models.CharField(max_length=20)
-    capacidad_total = models.DecimalField(max_digits=65535, decimal_places=65535, blank=True, null=True)
+    capacidad_total = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     fecha_instalacion = models.DateField(blank=True, null=True)
     ultimo_vaciado = models.DateTimeField(blank=True, null=True)
     descripcion_ubicacion = models.TextField(blank=True, null=True)
     id_zona = models.ForeignKey('Zonas', models.DO_NOTHING, db_column='id_zona', blank=True, null=True)
     id_residuo = models.ForeignKey('Residuos', models.DO_NOTHING, db_column='id_residuo', blank=True, null=True)
-    id_coordenada = models.ForeignKey('Coordenadas', models.DO_NOTHING, db_column='id_coordenada', blank=True, null=True)
+    id_coordenada = models.ForeignKey('Coordenadas', models.DO_NOTHING, db_column='id_coordenada', blank=True, null=True, unique=True)
     id_mapa = models.ForeignKey('Mapas', models.DO_NOTHING, db_column='id_mapa', blank=True, null=True)
 
     class Meta:
