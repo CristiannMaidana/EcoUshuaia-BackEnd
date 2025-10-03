@@ -202,7 +202,7 @@ class Usuarios(models.Model):
     id_usuario = models.AutoField(primary_key=True)
     nombre_usuario = models.CharField(max_length=50)
     apellido_usuario = models.CharField(max_length=50)
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=100, unique=True)
     id_direccion = models.ForeignKey(Direcciones, models.DO_NOTHING, db_column='id_direccion', blank=True, null=True)
     id_zona = models.ForeignKey('Zonas', models.DO_NOTHING, db_column='id_zona', blank=True, null=True)
     id_tipo_usuario = models.ForeignKey(TipoUsuarios, models.DO_NOTHING, db_column='id_tipo_usuario', blank=True, null=True)
