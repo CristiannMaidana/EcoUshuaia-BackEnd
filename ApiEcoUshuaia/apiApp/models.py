@@ -14,6 +14,7 @@ class Calendarios(models.Model):
     novedad = models.TextField()
     fecha = models.DateField()
     hora = models.TimeField()
+    titulo = models.CharField(max_length=20)
 
     class Meta:
         managed = False
