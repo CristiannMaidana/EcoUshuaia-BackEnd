@@ -11,17 +11,22 @@ from django.contrib.auth.models import User
 
 class Calendarios(models.Model):
     id_calendario = models.AutoField(primary_key=True)
-    novedad = models.TextField()
+    cuerpo = models.TextField()
     fecha = models.DateField()
     hora = models.TimeField()
     titulo = models.CharField(max_length=20)
+    duracion = models.DurationField()
+    subtitulo = models.CharField(max_length=160, blank=True, null=True)
+    todo_el_dia = models.BooleanField()
+    categoria_noticia = models.CharField(max_length=40)
+    creado_at = models.DateTimeField()
 
     class Meta:
         managed = False
         db_table = 'calendarios'
 
     def __str__(self):
-        return f"{self.fecha} {self.hora} {self.novedad}"
+        return f"{self.fecha} {self.hora} {self.cuerpo}"
 
 
 class Contenedores(models.Model):
