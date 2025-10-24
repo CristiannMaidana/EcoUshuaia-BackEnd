@@ -10,4 +10,4 @@ class CalendariosViewSet(viewsets.ModelViewSet):
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('fecha',)
-    ordering_fields = ('id_calendario', 'fecha', 'hora')
+    ordering_fields = ('id_calendario', 'fecha', 'hora', 'titulo')
