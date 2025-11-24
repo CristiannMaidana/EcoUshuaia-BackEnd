@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from apiApp.views.calendarios_views import CalendariosViewSet
+from apiApp.views.categoria_noticias_views import CategoriaNoticiasViewSet
 from apiApp.views.contenedores_views import ContenedoresViewSet
 from apiApp.views.coordenada_views import CoordendaViewSet
 from apiApp.views.direcciones_views import DireccionesViewSet
@@ -22,6 +23,7 @@ router.register('zonas', ZonasViewSet, basename='zonas')
 router.register('direcciones', DireccionesViewSet, basename='direcciones')
 router.register('Historial de residuos de usuarios', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
 router.register('Registro de contenedores de ususarios', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
+router.register('Categoria de noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
 urlpatterns = [
     path('', include(router.urls)),
 ]
