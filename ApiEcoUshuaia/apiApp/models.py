@@ -18,7 +18,7 @@ class Calendarios(models.Model):
     duracion = models.DurationField()
     subtitulo = models.CharField(max_length=160, blank=True, null=True)
     todo_el_dia = models.BooleanField()
-    categoria_noticia = models.CharField(max_length=40)
+    categoria_noticia = models.ForeignKey('CategoriaNoticias', models.DO_NOTHING, db_column='categoria_noticia')
     creado_at = models.DateTimeField()
 
     class Meta:
@@ -27,6 +27,16 @@ class Calendarios(models.Model):
 
     def __str__(self):
         return f"{self.fecha} {self.hora} {self.cuerpo}"
+
+
+class CategoriaNoticias(models.Model):
+    id_categoria_noticias = models.AutoField(primary_key=True)
+    categoria = models.CharField(unique=True, max_length=60)
+    color_hex = models.CharField(unique=True, max_length=7)
+
+    class Meta:
+        managed = False
+        db_table = 'categoria_noticias'
 
 
 class Contenedores(models.Model):
