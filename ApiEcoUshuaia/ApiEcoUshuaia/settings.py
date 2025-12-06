@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apiApp',
     'rest_framework',
     'django.contrib.gis'
+    'rest_framework_gis'
 ]
 
 DEBUG = True
