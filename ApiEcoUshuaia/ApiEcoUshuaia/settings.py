@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apiApp',
     'rest_framework',
+    'django.contrib.gis'
 ]
 
 DEBUG = True
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'ApiEcoUshuaia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         'OPTIONS': {
             'service': 'my_service',
             'passfile': '.pgpass',
