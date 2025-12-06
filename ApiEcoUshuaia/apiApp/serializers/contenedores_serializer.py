@@ -20,7 +20,7 @@ class ContenedoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contenedores
         fields = ('id_contenedor', 'nombre_contenedor', 'color_contenedor', 'capacidad_total', 'fecha_instalacion',
-                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'id_coordenada', 'id_mapa',
+                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'coordenada', 'id_mapa',
                   'residuo')
         read_only_field = ('id_contenedor',)
 
