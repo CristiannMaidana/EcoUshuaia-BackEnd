@@ -7,7 +7,7 @@ from apiApp.serializers.contenedores_serializer import ContenedoresSerializer
 
 
 class ContenedoresViewSet(viewsets.ModelViewSet):
-    queryset = Contenedores.objects.select_related('id_zona', 'id_residuo', 'id_coordenada', 'id_mapa',).all()
+    queryset = Contenedores.objects.select_related('id_zona', 'id_residuo', 'id_mapa',).all()
     serializer_class = ContenedoresSerializer
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
