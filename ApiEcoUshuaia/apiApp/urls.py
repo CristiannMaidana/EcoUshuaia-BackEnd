@@ -23,7 +23,7 @@ router.register('zonas', ZonasViewSet, basename='zonas')
 router.register('direcciones', DireccionesViewSet, basename='direcciones')
 router.register('Historial de residuos de usuarios', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
 router.register('Registro de contenedores de ususarios', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
-router.register('Categoria de noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
+router.register('categoria_noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
 urlpatterns = [
     path('', include(router.urls)),
 ]
