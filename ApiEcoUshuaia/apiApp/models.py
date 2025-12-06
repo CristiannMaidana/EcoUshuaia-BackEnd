@@ -5,8 +5,8 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
-from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.gis.db import models
 
 
 class Calendarios(models.Model):
@@ -49,28 +49,13 @@ class Contenedores(models.Model):
     descripcion_ubicacion = models.TextField(blank=True, null=True)
     id_zona = models.ForeignKey('Zonas', models.DO_NOTHING, db_column='id_zona', blank=True, null=True)
     id_residuo = models.ForeignKey('Residuos', models.DO_NOTHING, db_column='id_residuo', blank=True, null=True)
-    id_coordenada = models.ForeignKey('Coordenadas', models.DO_NOTHING, db_column='id_coordenada', blank=True, null=True, unique=True)
     id_mapa = models.ForeignKey('Mapas', models.DO_NOTHING, db_column='id_mapa', blank=True, null=True)
+    coordenada = models.PointField(srid=4326, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'contenedores'
         unique_together = (('nombre_contenedor', 'id_mapa'),)
-
-
-class Coordenadas(models.Model):
-    id_coordenada = models.AutoField(primary_key=True)
-    archivo_coordenada = models.JSONField(unique=True, blank=True, null=True)
-    tipo_archivo = models.CharField(max_length=30, blank=True, null=True)
-    coordenada = models.TextField(unique=True, blank=True, null=True)  # This field type is a guess.
-    tipo_coordenada = models.CharField(max_length=15, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'coordenadas'
-
-    def __str__(self):
-        return f"{self.tipo_archivo} - {self.tipo_coordenada}"
 
 
 class Direcciones(models.Model):
@@ -82,7 +67,7 @@ class Direcciones(models.Model):
     codigo_postal = models.CharField(max_length=20, blank=True, null=True)
     provincia = models.CharField(max_length=100, blank=True, null=True)
     pais = models.CharField(max_length=50, blank=True, null=True)
-    id_coordenada = models.ForeignKey(Coordenadas, models.DO_NOTHING, db_column='id_coordenada', blank=True, null=True)
+    coordenada = models.PointField(srid=4326, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -104,7 +89,7 @@ class Estados(models.Model):
 class Mapas(models.Model):
     id_mapa = models.AutoField(primary_key=True)
     nombre_mapa = models.CharField(unique=True, max_length=50)
-    id_coordenada = models.ForeignKey(Coordenadas, models.DO_NOTHING, db_column='id_coordenada')
+    coordenada = models.GeometryField(srid=4326, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -179,18 +164,6 @@ class Sensores(models.Model):
         managed = False
         db_table = 'sensores'
         unique_together = (('id_contenedor', 'nombre_sensor'),)
-
-
-class SpatialRefSys(models.Model):
-    srid = models.IntegerField(primary_key=True)
-    auth_name = models.CharField(max_length=256, blank=True, null=True)
-    auth_srid = models.IntegerField(blank=True, null=True)
-    srtext = models.CharField(max_length=2048, blank=True, null=True)
-    proj4text = models.CharField(max_length=2048, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'spatial_ref_sys'
 
 
 class TipoEstados(models.Model):
@@ -274,7 +247,7 @@ class Zonas(models.Model):
     color_zona = models.CharField(max_length=20, blank=True, null=True)
     id_mapa = models.ForeignKey(Mapas, models.DO_NOTHING, db_column='id_mapa', blank=True, null=True)
     id_calendario = models.ForeignKey(Calendarios, models.DO_NOTHING, db_column='id_calendario', blank=True, null=True)
-    id_coordenada = models.ForeignKey(Coordenadas, models.DO_NOTHING, db_column='id_coordenada', blank=True, null=True)
+    coordenada = models.MultiPolygonField(srid=4326, blank=True, null=True)
 
     class Meta:
         managed = False
