@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apiApp',
     'rest_framework',
-    'django.contrib.gis'
-    'rest_framework_gis'
+    'django.contrib.gis',
+    'rest_framework_gis',
 ]
 
 DEBUG = True
