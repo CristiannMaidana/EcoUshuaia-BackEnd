@@ -1,5 +1,6 @@
 from apiApp.models import Contenedores, Residuos
 from rest_framework import serializers
+from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 
 class ResiduoLiteSerializer(serializers.ModelSerializer):
@@ -9,7 +10,7 @@ class ResiduoLiteSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre','categoria')
 
 
-class ContenedoresSerializer(serializers.ModelSerializer):
+class ContenedoresSerializer(GeoFeatureModelSerializer):
     id_residuo = serializers.PrimaryKeyRelatedField(
         queryset=Residuos.objects.all(),
         write_only=True
@@ -19,8 +20,10 @@ class ContenedoresSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contenedores
+        geo_field = 'coordenada'
+        id_field = 'id_contenedor'
         fields = ('id_contenedor', 'nombre_contenedor', 'color_contenedor', 'capacidad_total', 'fecha_instalacion',
-                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'coordenada', 'id_mapa',
+                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'id_mapa',
                   'residuo')
         read_only_field = ('id_contenedor',)
 
