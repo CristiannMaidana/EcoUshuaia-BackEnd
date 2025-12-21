@@ -39,6 +39,16 @@ class CategoriaNoticias(models.Model):
         db_table = 'categoria_noticias'
 
 
+class CategoriaResiduos(models.Model):
+    id_categoria_residuo = models.AutoField(primary_key=True)
+    categoria = models.CharField(unique=True, max_length=60)
+    color_hex = models.CharField(unique=True, max_length=7)
+
+    class Meta:
+        managed = False
+        db_table = 'categoria_residuos'
+
+
 class Contenedores(models.Model):
     id_contenedor = models.AutoField(primary_key=True)
     nombre_contenedor = models.CharField(max_length=50)
@@ -74,16 +84,34 @@ class Direcciones(models.Model):
         db_table = 'direcciones'
 
 
-class Estados(models.Model):
-    id_estado = models.AutoField(primary_key=True)
-    fecha_estado = models.DateTimeField(blank=True, null=True)
-    volumen = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
-    id_sensor = models.ForeignKey('Sensores', models.DO_NOTHING, db_column='id_sensor', blank=True, null=True)
-    id_tipo_estado = models.ForeignKey('TipoEstados', models.DO_NOTHING, db_column='id_tipo_estado', blank=True, null=True)
+class ExcepcionesRecolecciones(models.Model):
+    id_excepciones_recoleccion = models.AutoField(primary_key=True)
+    fecha = models.SmallIntegerField()
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+    tipo = models.TextField()
+    nueva_fecha = models.DateField()
+    nuevo_inicio = models.TimeField()
+    nuevo_fin = models.TimeField()
+    motivo = models.TextField()
+    id_horario_recoleccion = models.ForeignKey('HorariosRecoleccion', models.DO_NOTHING, db_column='id_horario_recoleccion', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'estados'
+        db_table = 'excepciones_recolecciones'
+
+
+class HorariosRecoleccion(models.Model):
+    id_horario_recoleccion = models.AutoField(primary_key=True)
+    hora_inicio = models.TimeField()
+    hora_fin = models.TimeField()
+    dia_semana = models.SmallIntegerField()
+    id_zona = models.ForeignKey('Zonas', models.DO_NOTHING, db_column='id_zona', blank=True, null=True)
+    id_categoria_residuo = models.ForeignKey(CategoriaResiduos, models.DO_NOTHING, db_column='id_categoria_residuo', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'horarios_recoleccion'
 
 
 class Mapas(models.Model):
@@ -140,10 +168,10 @@ class Residuos(models.Model):
     id_residuo = models.AutoField(primary_key=True)
     nombre = models.CharField(unique=True, max_length=50)
     imagen = models.CharField(max_length=255, blank=True, null=True)
-    categoria = models.CharField(max_length=50, blank=True, null=True)
     peso = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     instruccion_reciclado = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
+    id_categoria_residuos = models.ForeignKey(CategoriaResiduos, models.DO_NOTHING, db_column='id_categoria_residuos', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -151,6 +179,28 @@ class Residuos(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+class SensorEstadoHistorial(models.Model):
+    id_estado = models.AutoField(primary_key=True)
+    fecha_estado = models.DateTimeField(blank=True, null=True)
+    id_sensor = models.ForeignKey('Sensores', models.DO_NOTHING, db_column='id_sensor', blank=True, null=True)
+    id_sensor_estado_tipo = models.ForeignKey('SensorEstadosTipos', models.DO_NOTHING, db_column='id_sensor_estado_tipo', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sensor_estado_historial'
+
+
+class SensorEstadosTipos(models.Model):
+    id_sensor_estado_tipos = models.AutoField(primary_key=True)
+    estado = models.CharField(unique=True, max_length=60)
+    descripcion = models.TextField()
+    severidad = models.SmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'sensor_estados_tipos'
 
 
 class Sensores(models.Model):
@@ -164,15 +214,6 @@ class Sensores(models.Model):
         managed = False
         db_table = 'sensores'
         unique_together = (('id_contenedor', 'nombre_sensor'),)
-
-
-class TipoEstados(models.Model):
-    id_tipo_estado = models.AutoField(primary_key=True)
-    nombre_estados = models.CharField(max_length=50, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'tipo_estados'
 
 
 class TipoUsuarios(models.Model):
