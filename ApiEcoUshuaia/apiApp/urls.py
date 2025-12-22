@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from apiApp.views.calendarios_views import CalendariosViewSet
 from apiApp.views.categoria_noticias_views import CategoriaNoticiasViewSet
+from apiApp.views.categoria_residuos_view import CategoriaResiduosViewSet
 from apiApp.views.contenedores_views import ContenedoresViewSet
 from apiApp.views.direcciones_views import DireccionesViewSet
 from apiApp.views.notificaciones_views import NotificacionesViewSet
@@ -22,6 +23,7 @@ router.register('direcciones', DireccionesViewSet, basename='direcciones')
 router.register('Historial de residuos de usuarios', UsuariosHistorialesResiduosViewSet, basename='usuariosHistorialesResiduos')
 router.register('Registro de contenedores de ususarios', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
 router.register('categoria_noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
+router.register('categoria_residuos', CategoriaResiduosViewSet, basename='categoriaResiduos')
 urlpatterns = [
     path('', include(router.urls)),
 ]
