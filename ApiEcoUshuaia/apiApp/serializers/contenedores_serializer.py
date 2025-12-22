@@ -3,28 +3,14 @@ from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 
-class ResiduoLiteSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(source='id_residuo')
-    class Meta:
-        model = Residuos
-        fields = ('id', 'nombre','categoria')
-
-
 class ContenedoresSerializer(GeoFeatureModelSerializer):
-    id_residuo = serializers.PrimaryKeyRelatedField(
-        queryset=Residuos.objects.all(),
-        write_only=True
-    )
-
-    residuo = ResiduoLiteSerializer(source='id_residuo', read_only=True)
 
     class Meta:
         model = Contenedores
         geo_field = 'coordenada'
         id_field = 'id_contenedor'
         fields = ('id_contenedor', 'nombre_contenedor', 'color_contenedor', 'capacidad_total', 'fecha_instalacion',
-                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'id_mapa',
-                  'residuo')
+                  'ultimo_vaciado', 'descripcion_ubicacion', 'id_zona', 'id_residuo', 'id_mapa')
         read_only_field = ('id_contenedor',)
 
     def validate_capacidad_total(self, value):
