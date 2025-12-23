@@ -167,7 +167,7 @@ class RegistroRecolecciones(models.Model):
 class Residuos(models.Model):
     id_residuo = models.AutoField(primary_key=True)
     nombre = models.CharField(unique=True, max_length=50)
-    imagen = models.CharField(max_length=255, blank=True, null=True)
+    color_hex = models.CharField(unique=True, max_length=7)
     peso = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     instruccion_reciclado = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
