@@ -29,3 +29,12 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
                 .values('hora_inicio', 'id_categoria_residuo')
                 .order_by('hora_inicio'))
         return Response(list(rows))
+
+    # GET /api/horario_recoleccion/horario_inicio/06:00:00/dia_mannana/1/zona_id/1
+    @action(detail=False, methods=['get'], url_path=r'horario_inicio/(?P<hhmmss>\d{2}:\d{2}:\d{2})/dia_mannana/(?P<mannana>[0-6])/zona_id/(?P<zona>[0-6])')
+    def horario_dia_mannana_zona(self, request, hhmmss, mannana, zona):
+        vals = (HorariosRecoleccion.objects
+                .filter(id_zona=int(zona), dia_semana=int(mannana)+1, hora_inicio=hhmmss)
+                .values('id_categoria_residuo', 'id_zona')
+                )
+        return Response(list(vals))
