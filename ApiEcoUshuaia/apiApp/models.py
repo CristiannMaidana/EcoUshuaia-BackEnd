@@ -117,7 +117,11 @@ class HorariosRecoleccion(models.Model):
 class Mapas(models.Model):
     id_mapa = models.AutoField(primary_key=True)
     nombre_mapa = models.CharField(unique=True, max_length=50)
-    coordenada = models.GeometryField(srid=4326, blank=True, null=True)
+    center = models.PointField(srid=4326, blank=True, null=True)
+    bbox = models.PolygonField(srid=4326, blank=True, null=True)
+    zoom_inicial = models.DecimalField(max_digits=4, decimal_places=1)
+    zoom_min = models.DecimalField(max_digits=4, decimal_places=1)
+    zoom_max = models.DecimalField(max_digits=4, decimal_places=1)
 
     class Meta:
         managed = False
