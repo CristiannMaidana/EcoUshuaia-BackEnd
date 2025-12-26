@@ -6,6 +6,7 @@ from apiApp.views.categoria_noticias_views import CategoriaNoticiasViewSet
 from apiApp.views.categoria_residuos_view import CategoriaResiduosViewSet
 from apiApp.views.contenedores_views import ContenedoresViewSet
 from apiApp.views.direcciones_views import DireccionesViewSet
+from apiApp.views.horario_recoleccion_views import HorarioRecoleccionViewSet
 from apiApp.views.notificaciones_views import NotificacionesViewSet
 from apiApp.views.residuos_views import ResiduosViewSet
 from apiApp.views.usuarios_historiales_residuos_views import UsuariosHistorialesResiduosViewSet
@@ -24,6 +25,7 @@ router.register('Historial de residuos de usuarios', UsuariosHistorialesResiduos
 router.register('Registro de contenedores de ususarios', UsuariosHistorialesResiduosViewSet, basename='usuarioRegistroContenedores')
 router.register('categoria_noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
 router.register('categoria_residuos', CategoriaResiduosViewSet, basename='categoriaResiduos')
+router.register('horario_recoleccion', HorarioRecoleccionViewSet, basename='horarioRecoleccion')
 urlpatterns = [
     path('', include(router.urls)),
 ]
