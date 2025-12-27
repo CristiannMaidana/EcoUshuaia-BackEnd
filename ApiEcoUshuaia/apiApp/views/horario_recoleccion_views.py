@@ -38,3 +38,11 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
                 .values('id_categoria_residuo', 'id_zona')
                 )
         return Response(list(vals))
+
+    # GET /api/horario_recoleccion/semana/1/zona/1
+    @action(detail=False, methods=['get'], url_path='semana/(?P<dia>[0-6])/zona/(?P<zona>[0-6])')
+    def semana_zona(self, request, dia, zona):
+        rows = (HorariosRecoleccion.objects
+                .filter(id_zona=int(zona),  dia_semana__gt=int(dia), dia_semana__lte=6)
+                .values_list('hora_inicio', 'id_categoria_residuo', 'dia_semana', 'id_zona'))
+        return Response(list(rows))
