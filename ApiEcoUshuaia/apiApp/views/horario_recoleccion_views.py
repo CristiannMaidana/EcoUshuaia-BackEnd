@@ -21,11 +21,11 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
                 .values_list('id_categoria_residuo', flat=True))
         return Response(list(vals))
 
-    # GET /api/horarios-recoleccion/dia/1/
-    @action(detail=False, methods=['get'], url_path=r'de-dia/(?P<dia>[0-6])')
-    def de_dia(self, request, dia):
+    # GET /api/horarios-recoleccion/dia/1/zona/1
+    @action(detail=False, methods=['get'], url_path=r'dia/(?P<dia>[0-6])/zona/(?P<zona>[0-6])')
+    def dia_zona(self, request, dia, zona):
         rows = (HorariosRecoleccion.objects
-                .filter(dia_semana=int(dia))
+                .filter(id_zona=int(zona), dia_semana=(dia))
                 .values('hora_inicio', 'id_categoria_residuo')
                 .order_by('hora_inicio'))
         return Response(list(rows))
