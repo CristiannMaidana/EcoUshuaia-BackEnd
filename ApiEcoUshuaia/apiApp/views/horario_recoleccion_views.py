@@ -18,17 +18,17 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
     def horario_dia_zona(self, request, hhmmss, dia, zona):
         vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona), dia_semana=int(dia), hora_inicio=hhmmss)
-                .values_list('id_categoria_residuo', flat=True))
+                .values('id_categoria_residuo', flat=True))
         return Response(list(vals))
 
     # GET /api/horarios-recoleccion/dia/1/zona/1
     @action(detail=False, methods=['get'], url_path=r'dia/(?P<dia>[0-6])/zona/(?P<zona>[0-6])')
     def dia_zona(self, request, dia, zona):
-        rows = (HorariosRecoleccion.objects
+        vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona), dia_semana=(dia))
                 .values('hora_inicio', 'id_categoria_residuo')
                 .order_by('hora_inicio'))
-        return Response(list(rows))
+        return Response(list(vals))
 
     # GET /api/horario_recoleccion/horario_inicio/06:00:00/dia_mannana/1/zona_id/1
     @action(detail=False, methods=['get'], url_path=r'horario_inicio/(?P<hhmmss>\d{2}:\d{2}:\d{2})/dia_mannana/(?P<mannana>[0-6])/zona_id/(?P<zona>[0-6])')
@@ -42,7 +42,7 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
     # GET /api/horario_recoleccion/semana/1/zona/1
     @action(detail=False, methods=['get'], url_path='semana/(?P<dia>[0-6])/zona/(?P<zona>[0-6])')
     def semana_zona(self, request, dia, zona):
-        rows = (HorariosRecoleccion.objects
+        vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona),  dia_semana__gt=int(dia), dia_semana__lte=6)
-                .values_list('hora_inicio', 'id_categoria_residuo', 'dia_semana', 'id_zona'))
-        return Response(list(rows))
+                .values('hora_inicio', 'id_categoria_residuo', 'dia_semana', 'id_zona'))
+        return Response(list(vals))
