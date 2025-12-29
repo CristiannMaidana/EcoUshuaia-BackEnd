@@ -14,11 +14,13 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
     search_fields = ('id_horario_recoleccion', 'dia_semana' 'hora_inicio')
 
     # GET /api/horario_recoleccion/horario_inicio/06:00:00
-    @action(detail=False, methods=['get'], url_path=r'horario_inicio/(?P<hhmmss>\d{2}:\d{2}:\d{2})')
-    def horarios(self, request, hhmmss):
-        vals = (HorariosRecoleccion.objects
-                .filter(hora_inicio=hhmmss)
+    @action(detail=False, methods=['get'], url_path=r'horario_inicio/(?P<inicio>\d{2}:\d{2}:\d{2})/horario_fin/(?P<fin>\d{2}:\d{2}:\d{2})')
+    def horarios(self, request, inicio, fin):
+        vals = (((HorariosRecoleccion.objects
+                .filter(hora_inicio__gte=inicio, hora_fin__lte=fin)
                 .values('id_categoria_residuo'))
+                .distinct())
+                .order_by('id_categoria_residuo'))
         return Response(list(vals))
 
     # GET /api/horario_recoleccion/dia/1/zona/1
