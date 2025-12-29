@@ -29,6 +29,7 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
         vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona), dia_semana=(dia))
                 .values('id_categoria_residuo', 'hora_inicio')
+                .distinct()
                 .order_by('hora_inicio'))
         return Response(list(vals))
 
@@ -37,8 +38,8 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
     def horario_dia_mannana_zona(self, request, hhmmss, mannana, zona):
         vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona), dia_semana=int(mannana)+1, hora_inicio=hhmmss)
-                .values('id_categoria_residuo', 'id_zona')
-                )
+                .distinct()
+                .values('id_categoria_residuo', 'id_zona'))
         return Response(list(vals))
 
     # GET /api/horario_recoleccion/semana/1/zona/1
@@ -47,5 +48,6 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
         vals = (HorariosRecoleccion.objects
                 .filter(id_zona=int(zona),  dia_semana__gt=int(dia), dia_semana__lte=6)
                 .values('id_categoria_residuo', 'hora_inicio', 'dia_semana', 'id_zona')
+                .distinct()
                 .order_by('id_categoria_residuo'))
         return Response(list(vals))
