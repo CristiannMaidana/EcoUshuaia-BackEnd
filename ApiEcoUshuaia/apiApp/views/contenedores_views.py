@@ -42,3 +42,24 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
         #Serializar el resultado de la query
         ser = self.get_serializer(qs, many=True)
         return Response(ser.data)
+
+    # GET /api/contenedores/filtros/?categorias=2,3,4,5
+    # ó  /api/contenedores/filtros/?categorias=2&categorias=3&categorias=4&categorias=5
+    @action(detail=False, methods=['get'], url_path=r'filtros')
+    def por_categorias(self, request):
+        #obtenemos ids de tipo String desde url
+        ids = request.query_params.getlist('categorias')
+        if len(ids) == 1 and ',' in ids[0]:
+            ids = [x.strip() for x in ids[0].split(',') if x.strip()]
+        try:
+            ids = [int(x) for x in ids]
+        except (TypeError, ValueError):
+            return Response([])
+
+        qs = (self.get_queryset()
+              .filter(id_residuo__id_categoria_residuos__in=ids)
+              .order_by('id_residuo__nombre'))
+
+        #Serializar el resultado de la query
+        ser = self.get_serializer(qs, many=True)
+        return Response(ser.data)
