@@ -14,3 +14,8 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
     search_fields = ('nombre_contenedor', 'id_residuo__nombre')
     ordering_fields = ('nombre_contenedor', 'id_residuo__categoria','id_zona__nombre_zona')
     bbox_filterset_fields = {'coordenada'}
+    filterset_fields = {
+        'id_residuo': ['exact'],
+        'id_zona':    ['exact'],
+        'id_mapa':    ['exact'],
+    }
