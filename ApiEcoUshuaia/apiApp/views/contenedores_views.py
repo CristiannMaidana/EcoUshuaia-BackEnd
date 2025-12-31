@@ -43,9 +43,9 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
         ser = self.get_serializer(qs, many=True)
         return Response(ser.data)
 
-    # GET /api/contenedores/filtros/?categorias=2,3,4,5
-    # ó  /api/contenedores/filtros/?categorias=2&categorias=3&categorias=4&categorias=5
-    @action(detail=False, methods=['get'], url_path=r'filtros')
+    # GET /api/contenedores/por-categorias/?categorias=2,3,4,5
+    # ó  /api/contenedores/por-categorias/?categorias=2&categorias=3&categorias=4&categorias=5
+    @action(detail=False, methods=['get'], url_path=r'por-categorias')
     def por_categorias(self, request):
         #obtenemos ids de tipo String desde url
         ids = request.query_params.getlist('categorias')
