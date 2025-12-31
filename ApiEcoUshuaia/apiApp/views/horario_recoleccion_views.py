@@ -17,7 +17,7 @@ class HorarioRecoleccionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path=r'horario_inicio/(?P<inicio>\d{2}:\d{2}:\d{2})/horario_fin/(?P<fin>\d{2}:\d{2}:\d{2})')
     def horarios(self, request, inicio, fin):
         vals = (((HorariosRecoleccion.objects
-                .filter(hora_inicio__gte=inicio, hora_fin__lte=fin)
+                .filter(hora_inicio__range=(inicio, fin), hora_inicio__lt=fin)
                 .values('id_categoria_residuo'))
                 .distinct())
                 .order_by('id_categoria_residuo'))
