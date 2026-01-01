@@ -48,14 +48,10 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path=r'filtros')
     def filtros_residuos(self, request):
         # Obtenemos ids de tipo String desde url
-        ids = request.query_params.getlist('residuos')
-        if len(ids) == 1 and ',' in ids[0]:
-            ids = [x.strip() for x in ids[0].split(',') if x.strip()]
-        try:
-            #Convertimos ids en numero, si no nada
-            ids = [int(x) for x in ids]
-        except (TypeError, ValueError):
-            return Response([])
+        ids = self._helper_int_ids(request, 'residuos')
+        invalid = self._response_if_invalid_ids(ids)
+        if invalid:
+            return invalid
 
         # Filtramos los contenedores donde coincidan todos los ids
         qs = self.get_queryset().filter(id_residuo_id__in=ids) if ids else self.get_queryset().none()
@@ -65,21 +61,17 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
         return Response(ser.data)
 
     # GET /api/contenedores/por-categorias/?categorias=2,3,4,5
-    # ó  /api/contenedores/por-categorias/?categorias=2&categorias=3&categorias=4&categorias=5
     @action(detail=False, methods=['get'], url_path=r'por-categorias')
     def por_categorias(self, request):
         #obtenemos ids de tipo String desde url
-        ids = request.query_params.getlist('categorias')
-        if len(ids) == 1 and ',' in ids[0]:
-            ids = [x.strip() for x in ids[0].split(',') if x.strip()]
-        try:
-            ids = [int(x) for x in ids]
-        except (TypeError, ValueError):
-            return Response([])
+        ids = self._helper_int_ids(request, 'categorias')
+        invalid = self._response_if_invalid_ids(ids)
+        if invalid:
+            return invalid
 
         qs = (self.get_queryset()
               .filter(id_residuo__id_categoria_residuos__in=ids)
-              .order_by('id_residuo__nombre'))
+              .order_by('id_residuo__nombre')) if ids else self.get_queryset().none()
 
         #Serializar el resultado de la query
         ser = self.get_serializer(qs, many=True)
