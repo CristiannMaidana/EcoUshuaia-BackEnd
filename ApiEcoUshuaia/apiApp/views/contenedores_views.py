@@ -92,3 +92,19 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
 
         ser = self.get_serializer(qs, many=True)
         return Response(ser.data)
+
+    # GET /api/contenedores/por-mannana/?mannana=1,2,3
+    @action(detail=False, methods=['get'], url_path=r'por-mannana')
+    def por_categorias_mannana(self, request):
+        ids = self._helper_int_ids(request, 'mannana')
+        invalid = self._response_if_invalid_ids(ids)
+        if invalid:
+            return invalid
+
+        # (acá poné el filter real por "mañana" cuando lo tengas)
+        qs = (self.get_queryset()
+              .filter(id_residuo__id_categoria_residuos__in=ids)
+              .order_by('id_residuo__nombre')) if ids else self.get_queryset().none()
+
+        ser = self.get_serializer(qs, many=True)
+        return Response(ser.data)
