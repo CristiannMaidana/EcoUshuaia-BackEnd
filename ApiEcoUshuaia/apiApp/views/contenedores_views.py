@@ -22,6 +22,27 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
         'id_mapa':    ['exact'],
     }
 
+    # Helper para el paso a lista de ints
+    def _helper_int_ids(self, request, param_name: str):
+        raw = request.query_params.getlist(param_name)
+
+        if not raw:
+            return []
+
+        # Caso: ['1,2,3']
+        if len(raw) == 1 and ',' in raw[0]:
+            raw = [x.strip() for x in raw[0].split(',') if x.strip()]
+        else:
+            raw = [x.strip() for x in raw if x.strip()]
+
+        try:
+            return [int(x) for x in raw]
+        except (TypeError, ValueError):
+            return None
+
+    #Helper para devolver estados invalidos
+    def _response_if_invalid_ids(self, ids):
+        return Response([]) if ids is None else None
 
     # GET /api/contenedores/filtros/?residuos=1,3,5   (o ?residuos=1&residuos=3&residuos=5)
     @action(detail=False, methods=['get'], url_path=r'filtros')
