@@ -1,4 +1,6 @@
-from rest_framework import filters
+from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
+from rest_framework import filters, status
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -105,6 +107,27 @@ class ContenedoresViewSet(viewsets.ModelViewSet):
         qs = (self.get_queryset()
               .filter(id_residuo__id_categoria_residuos__in=ids)
               .order_by('id_residuo__nombre')) if ids else self.get_queryset().none()
+
+        ser = self.get_serializer(qs, many=True)
+        return Response(ser.data)
+
+    # GET /api/contenedores/cerca/-68.33839,-54.82707/100/
+    @action(detail=False, methods=['get'], url_path=r'cerca/(?P<lon>-?\d+(?:\.\d+)?),(?P<lat>-?\d+(?:\.\d+)?)/(?P<metros>\d+)')
+    def contenedores_cercanos(self, request, lon, lat, metros):
+        try:
+            lon = float(lon);
+            lat = float(lat);
+            metros = int(metros)
+        except ValueError:
+            return Response({'detail': 'Parámetros inválidos.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        p = Point(lon, lat, srid=4326)
+        qs = (
+            self.get_queryset()
+            .filter(
+                coordenada__distance_lte=(p, D(m=metros)))
+            .order_by('id_contenedor')
+        )
 
         ser = self.get_serializer(qs, many=True)
         return Response(ser.data)
