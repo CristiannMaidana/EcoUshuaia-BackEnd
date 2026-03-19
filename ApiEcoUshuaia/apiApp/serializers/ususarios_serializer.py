@@ -10,14 +10,8 @@ class UsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuarios
         fields = '__all__'
-        read_only_field =  ('id_usuario',)
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Usuarios.objects.all(),
-                fields=('email',),
-                message= 'Este usuario ya existe en la base de datos'
-            )
-        ]
+        read_only_fields =  ('id_usuario',)
+        validators = []
 
     def validate_nombre_usuario(self, nombre):
         if not nombre or not nombre.strip():
@@ -41,11 +35,11 @@ class UsuariosSerializer(serializers.ModelSerializer):
 
         return apellido
 
-    def validate_email_usuario(self, email):
+    def validate_email(self, email):
         if not email or not email.strip():
             raise serializers.ValidationError('El email no puede estar vacío.')
 
-        if '@' in email:
+        if '@' not in email:
             raise serializers.ValidationError('El email no es valido.')
 
         return email
