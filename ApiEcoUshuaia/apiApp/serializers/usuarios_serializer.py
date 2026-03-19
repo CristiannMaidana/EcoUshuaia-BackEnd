@@ -1,12 +1,16 @@
 import re
 
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.validators import UniqueTogetherValidator
 
 from apiApp.models import Usuarios
 
+User = get_user_model()
+
 
 class UsuariosSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, trim_whitespace=False)
+
     class Meta:
         model = Usuarios
         fields = '__all__'
@@ -43,3 +47,16 @@ class UsuariosSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('El email no es valido.')
 
         return email
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        email = validated_data.get('email')
+
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password
+        )
+
+        validated_data['user'] = user
+        return super().create(validated_data)
