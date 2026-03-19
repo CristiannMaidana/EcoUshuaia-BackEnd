@@ -5,7 +5,7 @@ from apiApp.serializers.usuarios_serializer import UsuariosSerializer
 
 
 class UsuariosViewSet(viewsets.ModelViewSet):
-    queryset = Usuarios.objects.select_related('id_zona', 'id_tipo_usuario').all()
+    queryset = Usuarios.objects.select_related('id_zona', 'id_tipo_usuario', 'user').all()
     serializer_class = UsuariosSerializer
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
