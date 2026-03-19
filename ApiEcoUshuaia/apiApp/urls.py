@@ -7,8 +7,10 @@ from apiApp.views.categoria_residuos_view import CategoriaResiduosViewSet
 from apiApp.views.contenedores_views import ContenedoresViewSet
 from apiApp.views.direcciones_views import DireccionesViewSet
 from apiApp.views.horario_recoleccion_views import HorarioRecoleccionViewSet
+from apiApp.views.medicion_sensores_views import MedicionSensoresViewSet
 from apiApp.views.notificaciones_views import NotificacionesViewSet
 from apiApp.views.residuos_views import ResiduosViewSet
+from apiApp.views.sensor_views import SensorViewSet
 from apiApp.views.usuarios_historiales_residuos_views import UsuariosHistorialesResiduosViewSet
 from apiApp.views.ususarios_views import UsuariosViewSet
 from apiApp.views.zonas_views import ZonasViewSet
@@ -26,6 +28,8 @@ router.register('Registro de contenedores de ususarios', UsuariosHistorialesResi
 router.register('categoria_noticias', CategoriaNoticiasViewSet, basename='categoriaNoticias')
 router.register('categoria_residuos', CategoriaResiduosViewSet, basename='categoriaResiduos')
 router.register('horario_recoleccion', HorarioRecoleccionViewSet, basename='horarioRecoleccion')
+router.register('sensores', SensorViewSet, basename='sensores')
+router.register('medicion_sensores', MedicionSensoresViewSet, basename='medicionSensores')
 urlpatterns = [
     path('', include(router.urls)),
 ]
