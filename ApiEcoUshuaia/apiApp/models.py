@@ -232,6 +232,17 @@ class TipoUsuarios(models.Model):
         return self.tipo_usuario
 
 
+class UmbralLlenado(models.Model):
+    id_umbral_llenado = models.AutoField(primary_key=True)
+    bajo_max = models.DecimalField(max_digits=5, decimal_places=2)
+    medio_max = models.DecimalField(max_digits=5, decimal_places=2)
+    alto_max = models.DecimalField(max_digits=5, decimal_places=2)
+
+    class Meta:
+        managed = False
+        db_table = 'umbral_llenado'
+
+
 class Usuarios(models.Model):
     id_usuario = models.AutoField(primary_key=True)
     nombre_usuario = models.CharField(max_length=50)
