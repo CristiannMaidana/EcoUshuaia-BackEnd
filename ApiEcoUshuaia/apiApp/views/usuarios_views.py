@@ -1,4 +1,5 @@
 from rest_framework import viewsets, filters
+from rest_framework.permissions import AllowAny
 
 from apiApp.models import Usuarios
 from apiApp.serializers.usuarios_serializer import UsuariosSerializer
@@ -7,6 +8,7 @@ from apiApp.serializers.usuarios_serializer import UsuariosSerializer
 class UsuariosViewSet(viewsets.ModelViewSet):
     queryset = Usuarios.objects.select_related('id_zona', 'id_tipo_usuario', 'user').all()
     serializer_class = UsuariosSerializer
+    permission_classes = [AllowAny]
 
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('id_usuario', 'email', )
