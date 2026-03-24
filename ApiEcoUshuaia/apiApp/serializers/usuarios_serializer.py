@@ -10,6 +10,7 @@ User = get_user_model()
 
 
 class UsuariosSerializer(serializers.ModelSerializer):
+    current_password = serializers.CharField(write_only=True, required=False, trim_whitespace=False)
     password = serializers.CharField(write_only=True, required=False, trim_whitespace=False)
 
     class Meta:
@@ -21,6 +22,25 @@ class UsuariosSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if self.instance is None and not attrs.get('password'):
             raise serializers.ValidationError({'password': 'La contraseña es obligatoria.'})
+
+        if self.instance is not None and attrs.get('password'):
+            current_password = attrs.get('current_password')
+            auth_user = self.instance.user
+
+            if auth_user is None:
+                raise serializers.ValidationError(
+                    {'password': 'El perfil no tiene un usuario autenticable asociado.'}
+                )
+
+            if not current_password:
+                raise serializers.ValidationError(
+                    {'current_password': 'Debes ingresar tu contraseña actual para cambiarla.'}
+                )
+
+            if not auth_user.check_password(current_password):
+                raise serializers.ValidationError(
+                    {'current_password': 'La contraseña actual es incorrecta.'}
+                )
 
         return attrs
 
@@ -73,6 +93,7 @@ class UsuariosSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
+        validated_data.pop('current_password', None)
         password = validated_data.pop('password', None)
         email = validated_data.get('email')
         auth_user = instance.user
