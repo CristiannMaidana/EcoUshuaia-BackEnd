@@ -16,9 +16,17 @@ class UsuariosViewSet(viewsets.ModelViewSet):
     search_fields = ('id_usuario', 'email', )
     ordering_fields = ('id_usuario', 'nombre_usuario', 'apellido_usuario', 'id_zona__nombre_zona')
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return queryset
+
+        return queryset.filter(user=self.request.user)
+
     @action(detail=False, methods=['get', 'patch'], permission_classes=[IsAuthenticated], url_path='me')
     def me(self, request):
-        usuario = Usuarios.objects.select_related('id_zona', 'id_tipo_usuario').get(user=request.user)
+        usuario = self.get_queryset().select_related('id_zona', 'id_tipo_usuario').get(user=request.user)
 
         if request.method == 'GET':
             serializer = self.get_serializer(usuario)
