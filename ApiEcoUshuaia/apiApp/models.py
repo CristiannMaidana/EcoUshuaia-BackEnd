@@ -284,7 +284,7 @@ class UsuariosRegistroContenedores(models.Model):
         unique_together = (('id_usuario', 'id_contenedor'),)
 
 
-class UsuariosTienenNotificaciones(models.Model):
+class UsuariosContenedoresFavoritos(models.Model):
     id_usuario_notificacion = models.AutoField(primary_key=True)
     leido = models.BooleanField(blank=True, null=True)
     fecha_recibido = models.DateTimeField(blank=True, null=True)
@@ -293,7 +293,7 @@ class UsuariosTienenNotificaciones(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'usuarios_tienen_notificaciones'
+        db_table = 'usuario_contenedores_favoritos'
         unique_together = (('id_usuario', 'id_notificaciones'),)
 
 
