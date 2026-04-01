@@ -272,7 +272,7 @@ class UsuariosHistorialesResiduos(models.Model):
         unique_together = (('id_usuario', 'id_residuo'),)
 
 
-class UsuariosRegistroContenedores(models.Model):
+class UsuariosContenedoresFavoritos(models.Model):
     id_usuario_registro_contenedor = models.AutoField(primary_key=True)
     nota_usuario_contenedor = models.TextField(blank=True, null=True)
     id_usuario = models.ForeignKey(Usuarios, models.DO_NOTHING, db_column='id_usuario')
@@ -280,11 +280,11 @@ class UsuariosRegistroContenedores(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'usuarios_registro_contenedores'
+        db_table = 'usuarios_contenedores_favoritos'
         unique_together = (('id_usuario', 'id_contenedor'),)
 
 
-class UsuariosContenedoresFavoritos(models.Model):
+class UsuariosTienenNotificaciones(models.Model):
     id_usuario_notificacion = models.AutoField(primary_key=True)
     leido = models.BooleanField(blank=True, null=True)
     fecha_recibido = models.DateTimeField(blank=True, null=True)
@@ -293,7 +293,7 @@ class UsuariosContenedoresFavoritos(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'usuario_contenedores_favoritos'
+        db_table = 'usuarios_tienen_notificaciones'
         unique_together = (('id_usuario', 'id_notificaciones'),)
 
 
